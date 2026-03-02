@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Para Duda</title>
+
+<style>
+  :root{
+    --pink:#ff4fa3;
+    --pink2:#ff86c8;
+    --black:#05050a;
+    --white:#ffffff;
+  }
+
+  *{ box-sizing:border-box; }
+  body{
+    margin:0;
+    font-family: Arial, Helvetica, sans-serif;
+    overflow:hidden;
+  }
+
+  .page{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding: 28px 18px;
+    transition: opacity .9s ease;
+  }
+
+  /* ===== Página 1 (preta) ===== */
+  #home{
+    background: radial-gradient(900px 500px at 50% 25%, rgba(255,79,163,.18), transparent 60%),
+                linear-gradient(180deg, #000 0%, #060611 100%);
+    color: var(--white);
+  }
+
+  .duda-wrap{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap: 18px;
+  }
+
+  /* Texto DUDA com efeito */
+  .duda-neon{
+    font-size: clamp(56px, 10vw, 110px);
+    font-weight: 900;
+    letter-spacing: 6px;
+    text-transform: uppercase;
+    padding: 10px 18px;
+    border-radius: 22px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(255,255,255,.04);
+    position: relative;
+    box-shadow:
+      0 0 25px rgba(255,79,163,.22),
+      0 0 60px rgba(255,79,163,.18);
+    animation: pulse 1.8s ease-in-out infinite;
+  }
+
+  .duda-neon::after{
+    content:"";
+    position:absolute;
+    inset:-18px;
+    border-radius: 28px;
+    background: radial-gradient(circle at 30% 30%, rgba(255,79,163,.25), transparent 55%),
+                radial-gradient(circle at 70% 70%, rgba(255,134,200,.18), transparent 60%);
+    filter: blur(10px);
+    opacity: .9;
+    pointer-events:none;
+    z-index:-1;
+  }
+
+  @keyframes pulse{
+    0%,100%{
+      text-shadow:
+        0 0 10px rgba(255,255,255,.55),
+        0 0 26px rgba(255,79,163,.55),
+        0 0 46px rgba(255,79,163,.35);
+      transform: translateY(0);
+      filter: brightness(1);
+    }
+    50%{
+      text-shadow:
+        0 0 14px rgba(255,255,255,.75),
+        0 0 34px rgba(255,79,163,.75),
+        0 0 64px rgba(255,79,163,.45);
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+    }
+  }
+
+  /* efeito "digitando" embaixo */
+  .typing{
+    font-size: 16px;
+    color: rgba(255,255,255,.82);
+    border-right: 2px solid rgba(255,255,255,.8);
+    padding-right: 6px;
+    white-space: nowrap;
+    overflow:hidden;
+    width: 0;
+    animation: typing 3.6s steps(34) forwards, caret .7s step-end infinite;
+  }
+  @keyframes typing{
+    from{ width: 0; }
+    to{ width: 340px; }
+  }
+  @keyframes caret{
+    50%{ border-color: transparent; }
+  }
+
+  .btn{
+    margin-top: 8px;
+    background: var(--pink);
+    color: white;
+    border: none;
+    padding: 16px 34px;
+    font-size: 20px;
+    font-weight: 800;
+    border-radius: 999px;
+    cursor: pointer;
+    box-shadow: 0 0 22px rgba(255,79,163,.55);
+    transition: .25s ease;
+  }
+  .btn:hover{
+    transform: scale(1.06);
+    box-shadow: 0 0 40px rgba(255,79,163,.75);
+  }
+
+  .hint{
+    margin-top: 10px;
+    font-size: 13px;
+    opacity: .75;
+  }
+
+  /* ===== Página 2 (rosa/preto) ===== */
+  #content{
+    opacity:0;
+    pointer-events:none;
+    color: white;
+    background:
+      radial-gradient(900px 600px at 20% 0%, rgba(255,79,163,.28), transparent 55%),
+      radial-gradient(900px 700px at 90% 20%, rgba(255,134,200,.22), transparent 60%),
+      linear-gradient(135deg, #000 20%, #ff4fa3 55%, #140012 100%);
+    overflow-y:auto;
+    justify-content:flex-start;
+  }
+
+  .card{
+    width: min(900px, 96%);
+    margin: 34px auto 40px;
+    padding: 22px 18px;
+    border-radius: 18px;
+    border: 1px solid rgba(255,255,255,.16);
+    background: rgba(0,0,0,.22);
+    box-shadow: 0 18px 45px rgba(0,0,0,.35);
+    backdrop-filter: blur(10px);
+  }
+
+  .title{
+    font-size: clamp(26px, 4.8vw, 40px);
+    margin: 8px 0 14px;
+    letter-spacing: -.4px;
+  }
+
+  .glow-name{
+    display:inline-block;
+    padding: 4px 10px;
+    border-radius: 14px;
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.16);
+    text-shadow:
+      0 0 12px rgba(255,255,255,.55),
+      0 0 28px rgba(255,79,163,.55);
+  }
+
+  .p{
+    text-align:left;
+    line-height: 1.9;
+    font-size: 17px;
+    color: rgba(255,255,255,.90);
+    margin: 0 0 14px;
+  }
+
+  .sep{
+    height: 1px;
+    background: rgba(255,255,255,.14);
+    margin: 18px 0;
+  }
+
+  .small{
+    opacity:.85;
+    font-size: 13px;
+    margin-top: 14px;
+  }
+
+  /* botão voltar topo */
+  .topbtn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    margin-top: 10px;
+    border-radius: 999px;
+    padding: 10px 14px;
+    border: 1px solid rgba(255,255,255,.18);
+    background: rgba(255,255,255,.08);
+    color: white;
+    cursor:pointer;
+  }
+  .topbtn:hover{ background: rgba(255,255,255,.12); }
+</style>
+</head>
+
+<body>
+
+<!-- PÁGINA 1 -->
+<section class="page" id="home">
+  <div class="duda-wrap">
+    <div class="duda-neon">DUDA</div>
+    <div class="typing" id="typingText">tem uma mensagem aqui pra você…</div>
+    <button class="btn" onclick="abrirSite()">Entrar</button>
+    <div class="hint">Clique em “Entrar”</div>
+  </div>
+</section>
+
+<!-- PÁGINA 2 -->
+<section class="page" id="content">
+  <div class="card">
+    <h1 class="title"><span class="glow-name">Maria Eduarda</span>, eu preciso te dizer algo.</h1>
+
+    <p class="p">
+      Eu demorei pra fazer isso, mas não porque eu não me importo. Eu demorei porque eu queria escolher bem as palavras,
+      porque eu tinha medo de falar errado de novo, medo de piorar, medo de te magoar mais. Só que o silêncio também machuca.
+      E eu não quero que a distância fale por mim. Então eu tô aqui, com sinceridade, sem esconder o que eu sinto:
+      <b>eu sinto muito.</b>
+    </p>
+
+    <p class="p">
+      Eu sei que eu errei. Sei que eu posso ter te decepcionado, te deixado triste, ou feito você se sentir desvalorizada.
+      E eu reconheço: às vezes a gente só percebe o tamanho de alguém na vida da gente quando existe a possibilidade de perder.
+      Eu não queria ter chegado nesse ponto pra entender, mas eu entendi. E eu quero assumir isso sem desculpas,
+      sem tentar passar por cima do que você sentiu.
+    </p>
+
+    <p class="p">
+      O que eu mais queria agora era poder voltar no tempo, escolher melhor as atitudes, controlar o impulso, pensar antes de agir.
+      Queria ter sido mais cuidadoso(a) com você. Porque amizade não é só presença nos dias bons — é cuidado nos dias difíceis.
+      E se eu falhei nisso, eu não vou fingir que não falhei. Eu falhei. E eu me arrependo.
+    </p>
+
+    <div class="sep"></div>
+
+    <p class="p">
+      Eu queria que você soubesse que eu valorizo de verdade tudo o que a gente viveu. Eu lembro das conversas que acalmavam,
+      dos momentos bobos que viravam memória boa, das risadas que pareciam curar o dia. Eu lembro do jeito que você é,
+      do seu jeito de falar, do seu jeito de sentir. E é justamente por conhecer você que eu entendo o quanto qualquer coisa
+      mal resolvida pesa. Você não merece confusão, não merece dúvida, não merece sentir que é menos do que é.
+    </p>
+
+    <p class="p">
+      Eu não tô pedindo pra você esquecer. Eu sei que não funciona assim. Eu tô pedindo uma chance de fazer do jeito certo:
+      <b>com respeito, com calma e com verdade.</b> Se você quiser falar, eu vou ouvir sem te interromper, sem tentar me defender,
+      sem transformar isso numa disputa. Eu quero entender o seu lado e aceitar o que você sentiu, porque o seu sentimento importa.
+    </p>
+
+    <p class="p">
+      E se você não estiver pronta agora, eu entendo. De verdade. Às vezes a gente precisa de tempo pra respirar, pra organizar
+      a cabeça, pra não falar no calor do momento. Se for isso, eu vou respeitar. Eu só queria que você soubesse que eu não tô
+      brincando com isso. Eu tô falando sério. Eu tô me importando. Eu tô aqui.
+    </p>
+
+    <div class="sep"></div>
+
+    <p class="p">
+      Eu sei que pedir desculpa não apaga o que aconteceu. Mas eu espero que pelo menos mostre que eu reconheço,
+      que eu aprendi algo, que eu não quero repetir. Eu não quero te perder por orgulho, por teimosia, por falta de conversa.
+      Eu não quero que a gente vire só lembrança amarga. Eu queria que a gente pudesse ficar bem — nem que seja aos poucos.
+    </p>
+
+    <p class="p">
+      Se eu pudesse resumir tudo em uma frase, seria: <b>você é importante pra mim</b>. E eu tô disposto(a) a fazer o que for certo:
+      pedir perdão, mudar postura, ter mais cuidado, ser mais transparente, ser melhor. Não porque eu quero “parecer” certo,
+      mas porque eu quero ser alguém que cuida de quem ama e de quem considera.
+    </p>
+
+    <p class="p">
+      Maria Eduarda… me desculpa.  
+      Me desculpa pelo que eu fiz, pelo que eu não fiz, pelo que eu falei, pelo que eu deixei de falar.
+      Me desculpa se eu te fiz se sentir sozinha quando você merecia apoio. Me desculpa se eu falhei com a nossa amizade.
+      Eu não quero te pressionar. Eu só quero te pedir uma chance de conversar, nem que seja pra encerrar com paz,
+      mas principalmente pra tentar recomeçar com mais maturidade.
+    </p>
+
+    <p class="p">
+      Se você quiser, eu posso começar simplesmente ouvindo:  
+      “O que foi mais difícil pra você nisso tudo?”  
+      E eu prometo não interromper. Prometo não invalidar. Prometo não diminuir.  
+      Eu quero fazer do jeito certo.
+    </p>
+
+    <div class="sep"></div>
+
+    <p class="p">
+      Obrigado(a) por ler até aqui. Mesmo que você esteja com raiva, mesmo que você esteja cansada, mesmo que você esteja distante…
+      você ter lido já significa muito. Eu vou respeitar o que você decidir.  
+      Mas eu precisava deixar isso escrito: <b>eu sinto muito, e eu me importo com você.</b>
+    </p>
+
+    <button class="topbtn" onclick="window.scrollTo({top:0, behavior:'smooth'})">⬆️ Voltar pro topo</button>
+    <div class="small">Feito com sinceridade.</div>
+  </div>
+</section>
+
+<script>
+  function abrirSite(){
+    const home = document.getElementById("home");
+    const content = document.getElementById("content");
+
+    home.style.opacity = "0";
+    setTimeout(() => {
+      home.style.display = "none";
+      content.style.opacity = "1";
+      content.style.pointerEvents = "auto";
+      document.body.style.overflow = "auto";
+    }, 900);
+  }
+</script>
+
+</body>
+</html>
